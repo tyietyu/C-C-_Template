@@ -57,10 +57,17 @@
             "group": "build"
         },
         {
-            "label": "[2] Run",
+            "label": "[2] Run (CMake)",
             "type": "shell",
             "command": "${workspaceFolder}\\build\\bin\\${config:project.name}.exe",
-            "dependsOn": "build",
+            "dependsOn": "[1] Build (CMake)",
+            "group": "build"
+        },
+        {
+            "label": "[2] Run (Ninja)",
+            "type": "shell",
+            "command": "${workspaceFolder}\\build\\bin\\${config:project.name}.exe",
+            "dependsOn": "[1] Build (Ninja)",
             "group": "build"
         },
     {
