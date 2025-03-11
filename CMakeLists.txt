@@ -14,8 +14,17 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 # 设置输出目录 - 简化为单一配置
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+# 明确指定源文件，避免包含CMake生成的临时文件
+set(SRC_FILES
+    "${CMAKE_SOURCE_DIR}/main.c"
+    "${CMAKE_SOURCE_DIR}/src/utils.c"
+)
+# 添加头文件目录
+include_directories(
+    ${CMAKE_SOURCE_DIR}/include
+)
 # 添加可执行文件（需要在设置输出目录之后）
-add_executable(${PROJECT_NAME} main.c)
+add_executable(${PROJECT_NAME} ${SRC_FILES})
 
 # 添加配置文件复制
 configure_file(${CMAKE_SOURCE_DIR}/config.json
