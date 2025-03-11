@@ -1,0 +1,10 @@
+{
+    "appName": "HelloWorld",
+    "version": "1.0.0",
+    "description": "A simple Hello World application",
+    "author": "User",
+    "settings": {
+        "debug": false,
+        "logLevel": "info"
+    }
+}

@@ -1,0 +1,77 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "[0] Config",
+            "type": "shell",
+            "command": "${config:cmake.path}",  // 使用配置中的 CMake 路径
+            "args": [
+                "-G",
+                "${config:cmake.generator}",
+                "-B",
+                "${workspaceFolder}/build"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "[1] Build (CMake)",
+            "type": "shell",
+            "command": "${config:cmake.path}",  // 使用 CMake 路径
+            "args": [
+                "--build",
+                "${workspaceFolder}/build"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "[1] Build (Ninja)",
+            "type": "shell",
+            "command": "${config:ninja.path}",  // 使用 Ninja 路径
+            "args": [
+                "-C",
+                "${workspaceFolder}/build"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "[-1] Clean (CMake)",
+            "type": "shell",
+            "command": "${config:cmake.path}",  // 使用 CMake 路径
+            "args": [
+                "--build",
+                "${workspaceFolder}/build",
+                "--target",
+                "clean"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "[-1] Clean (Ninja)",
+            "type": "shell",
+            "command": "${config:ninja.path}",  // 使用 Ninja 路径
+            "args": [
+                "-C",
+                "${workspaceFolder}/build",
+                "clean"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "[2] Run",
+            "type": "shell",
+            "command": "${workspaceFolder}\\build\\bin\\${config:project.name}.exe",
+            "dependsOn": "build",
+            "group": "build"
+        },
+    {
+            "label": "[-2] Clean All",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "if (Test-Path ${workspaceFolder}/build) { Remove-Item -Recurse -Force ${workspaceFolder}/build }"
+            ],
+            "group": "build"
+    }
+    ]
+}

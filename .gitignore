@@ -1,0 +1,13 @@
+# 不包含build文件夹
+build
+
+# 排除编译生成的文件
+*.o
+*.out
+*.exe
+
+# 排除CMake生成的文件
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
