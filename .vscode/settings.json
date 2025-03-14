@@ -1,18 +1,20 @@
 {
-    // 自定义选择 "Ninja" 或者 "MinGW Makefiles"
-    "cmake.generator": "MinGW Makefiles",
-    // "cmake.generator": "Ninja",
+    // 使用 CMake+Ninja 的构建方式
+    "cmake.generator": "Ninja",
     // 默认值为 "cmake"，即使用系统路径，也可自定义 "C:/Path/To/cmake.exe"    
     "cmake.path": "cmake",
     // 默认值为 "ninja"，使用系统路径，也可自定义 "C:/Path/To/ninja.exe"                   
     "ninja.path": "ninja",
     // 项目名称配置，与CMakeLists.txt中的PROJECT_NAME保持一致                   
     "project.name": "demo",
+    // 调试器配置
+    "gcc.path": "D:/Program/mingw64/bin/gcc.exe",  // gcc路径
+    "gdb.path": "D:/Program/mingw64/bin/gdb.exe",  // gdb路径
+    
     
     "c-project": {
         // 生成器类型配置
-        "generator.ninja": "Ninja",  // 适用于快速增量构建
-        "generator.cmake": "MinGW Makefiles",  // 兼容旧版Makefile系统
+        "generator.ninja": "Ninja",
         
         // 清理构建指令配置
         "cleanCommand": "cmake",
@@ -27,14 +29,9 @@
         // 激活的构建系统
         "activeBuildSystem": "cmake",
         
-        // 自动同步生成器配置
-        "generator": "${cmake.generator}",
-        "buildSystem": "CMake",
-        
         // 构建系统配置指令
         "configCommands": {
-            "cmake": "cmake -G \"${cmake.generator}\" -B \"${workspaceFolder}/build\"",
-            "ninja": "cmake -G \"Ninja\" -B \"${workspaceFolder}/build\"",
+            "ninja": "cmake -G \"Ninja\" -B \"${workspaceFolder}/build\""
         },
         
         // 输出目录配置

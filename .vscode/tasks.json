@@ -1,52 +1,41 @@
 {
     "version": "2.0.0",
     "tasks": [
+        // CMake + Ninja
         {
-            "label": "[0] Config",
+            "label": "Config",
             "type": "shell",
             "command": "${config:cmake.path}",  // 使用配置中的 CMake 路径
             "args": [
                 "-G",
                 "${config:cmake.generator}",
                 "-B",
-                "${workspaceFolder}/build"
+                "${workspaceFolder}/build",
+                "-DCMAKE_BUILD_TYPE=Debug"  // 调试模式（如果需要debug，须开启此处）
+                // "-DCMAKE_BUILD_TYPE=Release"  // 发布模式
             ],
             "group": "build"
         },
         {
-            "label": "[1] Build (CMake)",
-            "type": "shell",
-            "command": "${config:cmake.path}",  // 使用 CMake 路径
-            "args": [
-                "--build",
-                "${workspaceFolder}/build"
-            ],
-            "group": "build"
-        },
-        {
-            "label": "[1] Build (Ninja)",
+            "label": "Build",
             "type": "shell",
             "command": "${config:ninja.path}",  // 使用 Ninja 路径
             "args": [
                 "-C",
                 "${workspaceFolder}/build"
             ],
-            "group": "build"
+            "group": "build",
+            // "dependsOn": "Config"
         },
         {
-            "label": "[-1] Clean (CMake)",
+            "label": "Run",
             "type": "shell",
-            "command": "${config:cmake.path}",  // 使用 CMake 路径
-            "args": [
-                "--build",
-                "${workspaceFolder}/build",
-                "--target",
-                "clean"
-            ],
+            "command": "${workspaceFolder}/build/${config:project.name}.exe",
+            "dependsOn": "Build",
             "group": "build"
         },
         {
-            "label": "[-1] Clean (Ninja)",
+            "label": "Clean",
             "type": "shell",
             "command": "${config:ninja.path}",  // 使用 Ninja 路径
             "args": [
@@ -56,29 +45,17 @@
             ],
             "group": "build"
         },
+        // 删除 build 文件夹
         {
-            "label": "[2] Run (CMake)",
-            "type": "shell",
-            "command": "${workspaceFolder}\\build\\bin\\${config:project.name}.exe",
-            "dependsOn": "[1] Build (CMake)",
-            "group": "build"
+                "label": "Clean All",
+                "type": "shell",
+                "command": "powershell",
+                "args": [
+                    "-Command",
+                    "if (Test-Path ${workspaceFolder}/build) { Remove-Item -Recurse -Force ${workspaceFolder}/build }"
+                ],
+                "group": "build"
         },
-        {
-            "label": "[2] Run (Ninja)",
-            "type": "shell",
-            "command": "${workspaceFolder}\\build\\bin\\${config:project.name}.exe",
-            "dependsOn": "[1] Build (Ninja)",
-            "group": "build"
-        },
-    {
-            "label": "[-2] Clean All",
-            "type": "shell",
-            "command": "powershell",
-            "args": [
-                "-Command",
-                "if (Test-Path ${workspaceFolder}/build) { Remove-Item -Recurse -Force ${workspaceFolder}/build }"
-            ],
-            "group": "build"
-    }
+
     ]
 }

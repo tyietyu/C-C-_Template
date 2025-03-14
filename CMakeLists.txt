@@ -1,32 +1,24 @@
 cmake_minimum_required(VERSION 3.10)
-
-# 设置项目名称和版本
-# 从CMake变量获取项目名称
-if(NOT DEFINED PROJECT_NAME)
-    set(PROJECT_NAME "demo")
-endif()
+# 在此处定义项目名称
+set(PROJECT_NAME demo)
 project(${PROJECT_NAME} VERSION 1.0)
 
-# 指定C标准
+# 公共编译选项
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
 
-# 设置输出目录 - 简化为单一配置
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
-# 明确指定源文件，避免包含CMake生成的临时文件
-set(SRC_FILES
-    "${CMAKE_SOURCE_DIR}/main.c"
-    "${CMAKE_SOURCE_DIR}/src/utils.c"
+# 添加源文件
+set(SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils.c
+    # 其他源文件
 )
-# 添加头文件目录
+
+# 包含头文件目录
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
+    # 其他头文件目录
 )
-# 添加可执行文件（需要在设置输出目录之后）
-add_executable(${PROJECT_NAME} ${SRC_FILES})
 
-# 添加配置文件复制
-configure_file(${CMAKE_SOURCE_DIR}/config.json
-             ${CMAKE_BINARY_DIR}/bin/config.json
-             COPYONLY)
+# 添加可执行文件（需要在设置输出目录之后）
+add_executable(${PROJECT_NAME} ${SOURCES})
